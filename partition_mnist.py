@@ -23,6 +23,8 @@ from scipy import misc
 import logging
 
 
+from PIL import Image
+
 def get_mnist():
     dlutils.download.mnist()
     mnist = dlutils.reader.Mnist('mnist', train=True, test=True).items
@@ -36,7 +38,9 @@ def get_mnist():
 
     _images = []
     for im in images:
-        im = misc.imresize(im, (32, 32), interp='bilinear')
+        im = Image.fromarray(im)
+        im = im.resize((32, 32), resample=Image.BILINEAR)
+        im = np.array(im)
         _images.append(im)
     images = np.asarray(_images)
 
@@ -47,6 +51,7 @@ def get_mnist():
     #save_image(images.astype(dtype=np.float32).max(0), "data_max.png", pad_value=0.5, nrow=1)
 
     return [(l, im) for l, im in zip(labels, images)]
+
 
 
 def partition(cfg, logger):

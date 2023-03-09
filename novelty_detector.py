@@ -44,7 +44,7 @@ def extract_statistics(cfg, train_set, inliner_classes, E, G):
     zlist = []
     rlist = []
 
-    data_loader = make_dataloader(train_set, cfg.TEST.BATCH_SIZE, torch.cuda.current_device())
+    data_loader = make_dataloader(train_set, cfg.TEST.BATCH_SIZE, torch.device('cpu'))
 
     for label, x in data_loader:
         x = x.view(-1, cfg.MODEL.INPUT_IMAGE_SIZE * cfg.MODEL.INPUT_IMAGE_SIZE)
@@ -97,12 +97,11 @@ def extract_statistics(cfg, train_set, inliner_classes, E, G):
     return counts, bin_edges, gennorm_param
 
 
-def main(folding_id, inliner_classes, ic, total_classes, mul, folds=5, cfg=None):
+def main(folding_id, inliner_classes, ic, total_classes, mul, folds, cfg):
     logger = logging.getLogger("logger")
 
-    torch.set_default_tensor_type('torch.cuda.FloatTensor')
-    device = torch.cuda.current_device()
-    print("Running on ", torch.cuda.get_device_name(device))
+    device = torch.device('cpu')
+    print("Running on CPU")
 
     train_set, valid_set, test_set = make_datasets(cfg, folding_id, inliner_classes)
 
@@ -133,7 +132,7 @@ def main(folding_id, inliner_classes, ic, total_classes, mul, folds=5, cfg=None)
         result = []
         gt_novel = []
 
-        data_loader = make_dataloader(dataset, cfg.TEST.BATCH_SIZE, torch.cuda.current_device())
+        data_loader = make_dataloader(dataset, cfg.TEST.BATCH_SIZE, torch.device('cpu'))
 
         include_jacobian = True
 

@@ -76,7 +76,7 @@ def train(folding_id, inliner_classes, ic, cfg):
 
         epoch_start_time = time.time()
 
-        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.cuda.current_device())
+        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.device('cpu'))
         train_set.shuffle()
 
         if (epoch + 1) % 30 == 0:
