@@ -1,11 +1,15 @@
 from yacs.config import CfgNode as CN
 
-
 _C = CN()
 
 _C.OUTPUT_DIR = "results"
 
 _C.DATASET = CN()
+
+_C.DATASET.NAME = ""
+_C.DATASET.INLIER_CLASSES = []  # Add this line
+_C.DATASET.FOLDING_ID = 0  # Add this line
+_C.DATASET.IC = 0  # Add this line
 
 _C.DATASET.PERCENTAGES = [10, 20, 30, 40, 50]
 

@@ -223,6 +223,7 @@ def main(folding_id, inliner_classes, ic, total_classes, mul, folds, cfg):
         plt.figure(num=None, figsize=(8, 6), dpi=180, facecolor='w', edgecolor='k')
         e = compute_threshold(valid_set, p)
         results[p] = test(test_set, p, e)
+        print(results)
 
     return results
 

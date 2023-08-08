@@ -119,7 +119,6 @@ class ZDiscriminator_mergebatch(nn.Module):
         x = torch.sigmoid(self.linear3(x))
         return x
 
-
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
         m.weight.data.normal_(mean, std)

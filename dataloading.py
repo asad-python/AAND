@@ -133,6 +133,6 @@ def create_set_with_outlier_percentage(dataset, inliner_classes, target_percenta
     outlier_count = len([1 for x in dataset if x[0] not in inliner_classes])
     inliner_count = len([1 for x in dataset if x[0] in inliner_classes])
     real_percetage = outlier_count * 100.0 / (outlier_count + inliner_count)
-    assert abs(real_percetage - target_percentage) < 0.01, "Didn't create dataset with requested percentage of outliers"
+    assert abs(real_percetage - target_percentage) < 0.01, "Didn't cyreate dataset with requested percentage of outliers"
 
     return dataset
