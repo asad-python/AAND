@@ -1,9 +1,9 @@
 DATASET:
   FOLDS_COUNT: 5
   MEAN: 0.1307
-  PATH: mnist
+  PATH: coil100
   STD: 0.3081
-  TOTAL_CLASS_COUNT: 10
+  TOTAL_CLASS_COUNT: 100
   PERCENTAGES: [10, 20, 30, 40, 50]
 MODEL:
   LATENT_SIZE: 16
@@ -17,7 +17,6 @@ TRAIN:
   EPOCH_COUNT: 80
 
 OUTPUT_FOLDER: 'results'
-RESULTS_NAME: 'results_mnist.csv'
+RESULTS_NAME: 'results_coil-100.csv'
 
 LOSSES: 'classic'
-
