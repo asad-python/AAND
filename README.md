@@ -2,7 +2,7 @@
 
 **Muhammad Asad,Ihsan Ullah and Michael Madden**
 
-Machine Learning Group, Department of Computer Science, UNiversity of Galway\
+Machine Learning Group, Department of Computer Science, University of Galway\
     Ireland\
     muhammad.asad@universityofgalway.ie
     
