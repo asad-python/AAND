@@ -1,24 +1,11 @@
-# Generative Probabilistic Novelty Detection with Adversarial Autoencoders
+# Beyond the Known - Adversarial Autoencoders for Novelty Detection
 
-**Stanislav Pidhorskyi, Ranya Almohsen, Donald A Adjeroh, Gianfranco Doretto**
+**Muhammad Asad,Ihsan Ullah and Michael Madden**
 
-Lane Department of Computer Science and Electrical Engineering, West
-    Virginia University\
-    Morgantown, WV 26508\
-    {stpidhorskyi, ralmohse, daadjeroh, gidoretto} @mix.wvu.edu
+Machine Learning Group, Department of Computer Science, UNiversity of Galway\
+    Ireland\
+    muhammad.asad@universityofgalway.ie
     
-[The e-preprint of the article on arxiv](https://arxiv.org/abs/1807.02588).
-
-[NeurIPS Proceedings](https://papers.nips.cc/paper/7915-generative-probabilistic-novelty-detection-with-adversarial-autoencoders).
-
-
-    @inproceedings{pidhorskyi2018generative,
-      title={Generative probabilistic novelty detection with adversarial autoencoders},
-      author={Pidhorskyi, Stanislav and Almohsen, Ranya and Doretto, Gianfranco},
-      booktitle={Advances in neural information processing systems},
-      pages={6822--6833},
-      year={2018}
-    }
 
 
 ### Content
