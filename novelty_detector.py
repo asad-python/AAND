@@ -1,17 +1,3 @@
-# Copyright 2018-2020 Stanislav Pidhorskyi
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#  http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 
 import torch.utils.data
 from torchvision.utils import save_image
@@ -29,7 +15,7 @@ from utils.save_plot import save_plot
 import matplotlib.pyplot as plt
 import scipy.stats
 from scipy.special import loggamma
-
+import csv
 
 def r_pdf(x, bins, counts):
     if bins[0] < x < bins[-1]:
@@ -65,14 +51,15 @@ def extract_statistics(cfg, train_set, inliner_classes, E, G):
 
     zlist = np.concatenate(zlist)
 
-    counts, bin_edges = np.histogram(rlist, bins=30, normed=True)
+    #counts, bin_edges = np.histogram(rlist, bins=30, normed=True)
+    counts, bin_edges = np.histogram(rlist, bins=30, density=True)
 
     if cfg.MAKE_PLOTS:
         plt.plot(bin_edges[1:], counts, linewidth=2)
         save_plot(r"Distance, $\left \|\| I - \hat{I} \right \|\|$",
                   'Probability density',
                   r"PDF of distance for reconstruction error, $p\left(\left \|\| I - \hat{I} \right \|\| \right)$",
-                  cfg.OUTPUT_FOLDER + '/mnist_%s_reconstruction_error.pdf' % ("_".join([str(x) for x in inliner_classes])))
+                  cfg.OUTPUT_FOLDER + '/coil100_%s_reconstruction_error.pdf' % ("_".join([str(x) for x in inliner_classes])))
 
     for i in range(cfg.MODEL.LATENT_SIZE):
         plt.hist(zlist[:, i], bins='auto', histtype='step')
@@ -81,7 +68,7 @@ def extract_statistics(cfg, train_set, inliner_classes, E, G):
         save_plot(r"$z$",
                   'Probability density',
                   r"PDF of embeding $p\left(z \right)$",
-                  cfg.OUTPUT_FOLDER + '/mnist_%s_embedding.pdf' % ("_".join([str(x) for x in inliner_classes])))
+                  cfg.OUTPUT_FOLDER + '/coil100_%s_embedding.pdf' % ("_".join([str(x) for x in inliner_classes])))
 
     def fmin(func, x0, args, disp):
         x0 = [2.0, 0.0, 1.0]
@@ -113,8 +100,11 @@ def main(folding_id, inliner_classes, ic, total_classes, mul, folds, cfg):
     G = Generator(cfg.MODEL.LATENT_SIZE, channels=cfg.MODEL.INPUT_IMAGE_CHANNELS)
     E = Encoder(cfg.MODEL.LATENT_SIZE, channels=cfg.MODEL.INPUT_IMAGE_CHANNELS)
 
-    G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic))))
-    E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic))))
+    #G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic)))) # FOR MNIST
+    #E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic)))) # FOR MNIST
+
+    G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_fmnist_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
+    E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_fmnist_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
 
     G.eval()
     E.eval()
@@ -223,6 +213,7 @@ def main(folding_id, inliner_classes, ic, total_classes, mul, folds, cfg):
         plt.figure(num=None, figsize=(8, 6), dpi=180, facecolor='w', edgecolor='k')
         e = compute_threshold(valid_set, p)
         results[p] = test(test_set, p, e)
+        print(results)
 
     return results
 

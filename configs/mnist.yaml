@@ -14,9 +14,10 @@ OUTPUT_DIR: results
 TRAIN:
   BASE_LEARNING_RATE: 0.002
   BATCH_SIZE: 128
-  EPOCH_COUNT: 5
+  EPOCH_COUNT: 80
 
 OUTPUT_FOLDER: 'results'
 RESULTS_NAME: 'results_mnist.csv'
 
 LOSSES: 'classic'
+

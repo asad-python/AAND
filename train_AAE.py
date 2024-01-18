@@ -1,19 +1,5 @@
-# Copyright 2018-2020 Stanislav Pidhorskyi
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-
 import torch.utils.data
+import matplotlib.pyplot as plt
 from torch import optim
 from torchvision.utils import save_image
 from torch.autograd import Variable
@@ -26,8 +12,15 @@ from utils.tracker import LossTracker
 import torch.nn as nn
 import torch.nn.functional as F
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
+
 
 def train(folding_id, inliner_classes, ic, cfg):
+    D_losses = []
+    G_losses = []
+    GE_losses = []
+    global x, x_d
     logger = logging.getLogger("logger")
 
     zsize = cfg.MODEL.LATENT_SIZE
@@ -69,6 +62,7 @@ def train(folding_id, inliner_classes, ic, cfg):
     tracker = LossTracker(output_folder=output_folder)
 
     for epoch in range(cfg.TRAIN.EPOCH_COUNT):
+        print(f"Starting epoch {epoch + 1}")
         G.train()
         D.train()
         E.train()
@@ -76,7 +70,7 @@ def train(folding_id, inliner_classes, ic, cfg):
 
         epoch_start_time = time.time()
 
-        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.device('cpu'))
+        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.device(device))
         train_set.shuffle()
 
         if (epoch + 1) % 30 == 0:
@@ -115,7 +109,6 @@ def train(folding_id, inliner_classes, ic, cfg):
             D_optimizer.step()
 
             tracker.update(dict(D=D_train_loss))
-
 
             #############################################
 
@@ -177,9 +170,13 @@ def train(folding_id, inliner_classes, ic, cfg):
             tracker.update(dict(GE=Recon_loss, E=E_train_loss))
 
             # #############################################
+            D_losses.append(D_train_loss.item())
+            G_losses.append(G_train_loss.item())
+            GE_losses.append((Recon_loss + E_train_loss).item())
 
         comparison = torch.cat([x, x_d])
-        save_image(comparison.cpu(), os.path.join(output_folder, 'reconstruction_' + str(epoch) + '.png'), nrow=x.shape[0])
+        save_image(comparison.cpu(), os.path.join(output_folder, 'reconstruction_' + str(epoch) + '.png'),
+                   nrow=x.shape[0])
 
         epoch_end_time = time.time()
         per_epoch_ptime = epoch_end_time - epoch_start_time
@@ -199,12 +196,25 @@ def train(folding_id, inliner_classes, ic, cfg):
 
     logger.info("Training finish!... save training results")
 
-    os.makedirs("models", exist_ok=True)
+    plt.figure(figsize=(10, 5))
+    plt.title("Training Losses")
+    plt.plot(D_losses, label="D Loss")
+    plt.plot(G_losses, label="G Loss")
+    plt.plot(GE_losses, label="GE Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.xlim(0, 80)  # Add this line to limit the x-axis range
+    plt.savefig(os.path.join(output_folder, 'training_curve.png'))
+    #plt.show()
 
     print("Training finish!... save training results")
-    torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic)))
-    torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic)))
-    #torch.save(D.state_dict(), "Dmodel_%d_%d.pkl" %(folding_id, ic))
-    #torch.save(ZD.state_dict(), "ZDmodel_%d_%d.pkl" %(folding_id, ic))
-
-
+    # torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic)))
+    # torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic)))
+    # torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_coil100_%d_%d.pkl" % (folding_id, ic)))
+    # torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_coil100_%d_%d.pkl" % (folding_id, ic)))
+    torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_fmnist_%d_%d.pkl" % (folding_id, ic)))
+    torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_fmnist_%d_%d.pkl" % (folding_id, ic)))
+    print(folding_id, ic)
+    # torch.save(D.state_dict(), "Dmodel_%d_%d.pkl" %(folding_id, ic))
+    # torch.save(ZD.state_dict(), "ZDmodel_%d_%d.pkl" %(folding_id, ic))

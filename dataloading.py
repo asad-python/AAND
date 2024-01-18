@@ -1,17 +1,3 @@
-# Copyright 2018-2020 Stanislav Pidhorskyi
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 
 import torch.utils.data
 from net import *
@@ -82,7 +68,8 @@ def make_dataloader(dataset, batch_size, device):
         def __call__(self, batch):
             with torch.no_grad():
                 y, x = batch
-                x = torch.tensor(x / 255.0, requires_grad=True, dtype=torch.float32, device=self.device)
+                #x = torch.tensor(x / 255.0, requires_grad=True, dtype=torch.float32, device=self.device) # For MNIST
+                x = torch.tensor(x, requires_grad=True, dtype=torch.float32, device=self.device) # For COIL100
                 y = torch.tensor(y, dtype=torch.int32, device=self.device)
                 return y, x
 
@@ -97,6 +84,9 @@ def create_set_with_outlier_percentage(dataset, inliner_classes, target_percenta
     dataset_inliner = [x for x in dataset if x[0] in inliner_classes]
 
     def increase_length(data_list, target_length):
+        if len(data_list) == 0:
+            # Handle the empty list case
+            return []
         repeat = (target_length + len(data_list) - 1) // len(data_list)
         data_list = data_list * repeat
         data_list = data_list[:target_length]
@@ -133,6 +123,10 @@ def create_set_with_outlier_percentage(dataset, inliner_classes, target_percenta
     outlier_count = len([1 for x in dataset if x[0] not in inliner_classes])
     inliner_count = len([1 for x in dataset if x[0] in inliner_classes])
     real_percetage = outlier_count * 100.0 / (outlier_count + inliner_count)
+    print(f"Inliers: {len([1 for x in dataset if x[0] in inliner_classes])}")
+    print(f"Outliers: {len([1 for x in dataset if x[0] not in inliner_classes])}")
+    print(f"Real Percentage: {real_percetage}, Target Percentage: {target_percentage}")
+
     assert abs(real_percetage - target_percentage) < 0.01, "Didn't create dataset with requested percentage of outliers"
 
     return dataset
