@@ -1,17 +1,3 @@
-# Copyright 2018-2020 Stanislav Pidhorskyi
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#  http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
 
 import torch.utils.data
 from torchvision.utils import save_image
@@ -29,7 +15,7 @@ from utils.save_plot import save_plot
 import matplotlib.pyplot as plt
 import scipy.stats
 from scipy.special import loggamma
-
+import csv
 
 def r_pdf(x, bins, counts):
     if bins[0] < x < bins[-1]:
@@ -117,8 +103,8 @@ def main(folding_id, inliner_classes, ic, total_classes, mul, folds, cfg):
     #G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic)))) # FOR MNIST
     #E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic)))) # FOR MNIST
 
-    G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_coil100_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
-    E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_coil100_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
+    G.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_fmnist_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
+    E.load_state_dict(torch.load(os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_fmnist_%d_%d.pkl" % (folding_id, ic)))) # FOR COIL100
 
     G.eval()
     E.eval()

@@ -2,6 +2,12 @@ import numpy as np
 from sklearn.metrics import roc_auc_score
 import pickle
 import os
+from sklearn.metrics import confusion_matrix
+import itertools
+import csv
+
+
+
 
 
 def get_f1(true_positive, false_positive, false_negative):
@@ -22,6 +28,30 @@ def evaluate(logger, percentage_of_outliers, inliner_classes, prediction, thresh
     false_positive = np.sum(np.logical_and(y, gt_outlier))
     false_negative = np.sum(np.logical_and(np.logical_not(y), gt_inlier))
     total_count = true_positive + true_negative + false_positive + false_negative
+
+    # Create confusion matrix
+    y_pred = y.astype(int)
+    y_true = gt_inlier.astype(int)
+    c_matrix = confusion_matrix(y_true, y_pred).tolist()
+    with open('y_true_y_pred.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+
+        # If the file is empty, write the header
+        if file.tell() == 0:
+            writer.writerow(['y_true', 'y_pred'])
+
+        # Write the rows
+        for true, pred in zip(y_true, y_pred):
+            writer.writerow([true, pred])
+
+    # Convert confusion matrix to string
+    matrix_str = (
+        "Confusion Matrix:\n"
+        "True Positive (TP): {}\n"
+        "False Positive (FP): {}\n"
+        "True Negative (TN): {}\n"
+        "False Negative (FN): {}\n"
+    ).format(c_matrix[1][1], c_matrix[0][1], c_matrix[0][0], c_matrix[1][0])
 
     accuracy = 100 * (true_positive + true_negative) / total_count
 
@@ -118,11 +148,14 @@ def evaluate(logger, percentage_of_outliers, inliner_classes, prediction, thresh
     logger.info("auprout: %f" % auprout)
 
     with open(os.path.join("results.txt"), "a") as file:
+        # Write the existing information to file
         file.write(
             "Class: %s\n Percentage: %d\n"
             "Error: %f\n F1: %f\n AUC: %f\nfpr95: %f"
-            "\nDetection: %f\nauprin: %f\nauprout: %f\n\n" %
-            ("_".join([str(x) for x in inliner_classes]), percentage_of_outliers, error, f1, auc, fpr95, error, auprin, auprout))
+            "\nDetection: %f\nauprin: %f\nauprout: %f\n" %
+            ("_".join([str(x) for x in inliner_classes]), percentage_of_outliers, error, f1, auc, fpr95, error, auprin,
+             auprout))
 
-    return dict(auc=auc, f1=f1, fpr95=fpr95, error=error, auprin=auprin, auprout=auprout)
-    # return auc, f1, fpr95, error, auprin, auprout
+        # Write the confusion matrix to file
+        file.write(matrix_str)
+        file.write('\n\n')  # Add additional newline for separation

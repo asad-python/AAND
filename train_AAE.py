@@ -1,18 +1,3 @@
-# Copyright 2018-2020 Stanislav Pidhorskyi
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-
 import torch.utils.data
 import matplotlib.pyplot as plt
 from torch import optim
@@ -26,6 +11,9 @@ from net import Generator, Discriminator, Encoder, ZDiscriminator_mergebatch, ZD
 from utils.tracker import LossTracker
 import torch.nn as nn
 import torch.nn.functional as F
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 
 def train(folding_id, inliner_classes, ic, cfg):
@@ -82,7 +70,7 @@ def train(folding_id, inliner_classes, ic, cfg):
 
         epoch_start_time = time.time()
 
-        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.device('cpu'))
+        data_loader = make_dataloader(train_set, cfg.TRAIN.BATCH_SIZE, torch.device(device))
         train_set.shuffle()
 
         if (epoch + 1) % 30 == 0:
@@ -218,13 +206,15 @@ def train(folding_id, inliner_classes, ic, cfg):
     plt.legend()
     plt.xlim(0, 80)  # Add this line to limit the x-axis range
     plt.savefig(os.path.join(output_folder, 'training_curve.png'))
-    plt.show()
+    #plt.show()
 
     print("Training finish!... save training results")
     # torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_%d_%d.pkl" %(folding_id, ic)))
     # torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_%d_%d.pkl" %(folding_id, ic)))
-    torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_coil100_%d_%d.pkl" % (folding_id, ic)))
-    torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_coil100_%d_%d.pkl" % (folding_id, ic)))
-    print(folding_id,ic)
+    # torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_coil100_%d_%d.pkl" % (folding_id, ic)))
+    # torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_coil100_%d_%d.pkl" % (folding_id, ic)))
+    torch.save(G.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Gmodel_fmnist_%d_%d.pkl" % (folding_id, ic)))
+    torch.save(E.state_dict(), os.path.join(cfg.OUTPUT_FOLDER, "models/Emodel_fmnist_%d_%d.pkl" % (folding_id, ic)))
+    print(folding_id, ic)
     # torch.save(D.state_dict(), "Dmodel_%d_%d.pkl" %(folding_id, ic))
     # torch.save(ZD.state_dict(), "ZDmodel_%d_%d.pkl" %(folding_id, ic))
