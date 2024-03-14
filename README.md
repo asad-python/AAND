@@ -4,7 +4,7 @@
 
 Machine Learning Group, Department of Computer Science, University of Galway\
     Ireland\
-    muhammad.asad@universityofgalway.ie
+    m.asad2@universityofgalway.ie
     
 
 
