@@ -14,7 +14,7 @@ Machine Learning Group, Department of Computer Science, University of Galway\
 * **partition_fmnist.py** - code for preparing MNIST dataset Fashion-MNIST.
 * **Testing_train_DATASETNAME.py** - code for training the datasets and it will automatically call  **train_AAE.py**.
 * **train_AAE.py** - code for training the autoencoder.
-* * **Testing_test_DATASETNAME.py** - code for training the datasets and it will automatically call  **novelty_detector.py**.
+* **Testing_test_DATASETNAME.py** - code for training the datasets and it will automatically call  **novelty_detector.py**.
 * **novelty_detector.py** - code for running novelty detector.
 * **net.py** - contains definitions of network architectures.
 * **evaluation.py** - contains the evaluation criteria, AUC, F-measure and all.
@@ -99,20 +99,34 @@ for folding_id in range(5):  # Loop from 0 to 4
    
 ### Generated/Reconstructed images
 
-![MNIST Reconstruction](images/reconstruction_58.png?raw=true "MNIST Reconstruction")
+![MNIST Reconstruction](images/5.png?raw=true "MNIST Reconstruction")
 
 *MNIST Reconstruction. First raw - real image, second - reconstructed.*
 
 <br><br>
 
-![MNIST Reconstruction](images/sample_58.png?raw=true "MNIST Generation")
+![MNIST Reconstruction](images/mnist_rec.png?raw=true "MNIST Generation")
 
-*MNIST Generation.*
+*MNIST Reconstruction.*
 
 <br><br>
-![COIL100 Reconstruction](images/reconstruction_59_one.png?raw=true "COIL100 Reconstruction")
 
-*COIL100 Reconstruction, single category. First raw - real image, second - reconstructed. Only 57 images were used for training.*
+![MNIST Reconstruction](images/mnist_rec2.png?raw=true "MNIST Generation")
+
+*MNIST Reconstruction.*
+
+
+<br><br>
+
+![MNIST Reconstruction](images/seven.png?raw=true "MNIST Generation")
+
+*MNIST Reconstruction.*
+
+
+<br><br>
+![COIL100 and UCSD Reconstruction](images/ucsd_re.png?raw=true "COIL100 Reconstruction")
+
+*COIL100 and UCSD Reconstruction, single category. First raw - real image, second - reconstructed.*
 
 <br><br>
 
@@ -137,4 +151,7 @@ for folding_id in range(5):  # Loop from 0 to 4
 ![PDF](images/PDF.png?raw=true "PDF")
 
 *PDF of the latent space for MNIST. Size of the latent space - 32*
+
+<br><br>
+
 
