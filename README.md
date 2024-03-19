@@ -40,7 +40,7 @@ Train autoencoder with **train_AAE.py**, you need to call *train* function:
     }
     # You can add more configurations like this:
      {"inliner_classes": [#######], "ic": #######}
-]
+    ]
 
 for folding_id in range(5):  # Loop from 0 to 4
     for data in data_list:
@@ -92,7 +92,7 @@ for folding_id in range(5):  # Loop from 0 to 4
         
    -  folding_id: Id of the fold. For MNIST, 5 folds are generated, so folding_id must be in range [0..5]
    -  inliner_classes: List of classes considered inliers.
-   -  ic: inlier class set index (used to save model with unique filename).
+   -  ic: inlier class set index (used to save the model with unique filename).
    -  total_classes: Total count of classes (deprecated, moved to config).
    -  mul: multiplier for power correction. Default value 0.2.
    -  folds: Number of folds (deprecated, moved to config).
