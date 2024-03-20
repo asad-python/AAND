@@ -35,7 +35,6 @@ data_list = [
     # You can add more configurations like this:
      {"inliner_classes": [#######], "ic": #######}
 ]
-
 for folding_id in range(5):  # Loop from 0 to 4
     for data in data_list:
         inliner_classes = data["inliner_classes"]
