@@ -27,14 +27,14 @@ Alternatively, you can call directly functions from **train_AAE.py** and **novel
 
 Train autoencoder with **train_AAE.py**, you need to call *train* function:
 
- data_list = [
+data_list = [
     {
         "inliner_classes": #######,
         "ic": ########   # index
     }
     # You can add more configurations like this:
      {"inliner_classes": [#######], "ic": #######}
-    ]
+]
 
 for folding_id in range(5):  # Loop from 0 to 4
     for data in data_list:
@@ -44,6 +44,7 @@ for folding_id in range(5):  # Loop from 0 to 4
         # inlier class set index (used to save model with unique filename)
         print(ic)
         train(folding_id, inliner_classes, ic, cfg)
+
   
    Args:
    -  folding_id: It will automatically iterate over all the 5-folds.
