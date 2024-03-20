@@ -58,11 +58,11 @@ for folding_id in range(5):  # Loop from 0 to 4
    ### Preparing Testing
    
  After autoencoder was trained, from **novelty_detector.py**, you need to call *main* function:
-
+```
  data_list = [
     {
-        "inliner_classes": #######
-,        "ic": ########   # index
+        "inliner_classes": #######,
+        "ic": ########   # index
     }
     # You can add more configurations like this:
      {"inliner_classes": [#######], "ic": #######}
@@ -84,7 +84,7 @@ for folding_id in range(5):  # Loop from 0 to 4
             mul,
             folds, cfg
         )
-
+```
         
    -  folding_id: Id of the fold. For MNIST, 5 folds are generated, so folding_id must be in range [0..5]
    -  inliner_classes: List of classes considered inliers.
