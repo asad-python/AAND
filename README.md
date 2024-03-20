@@ -105,7 +105,10 @@ for folding_id in range(5):  # Loop from 0 to 4
    -  mul: multiplier for power correction. Default value 0.2.
    -  folds: Number of folds (deprecated, moved to config).
    
-### Generated/Reconstructed images
+### Generated/Reconstructed images, Frames and Videos
+
+![UCSD GIF](images/ucsd_vid_gif.gif)
+
 
 ![MNIST Reconstruction](images/5.png?raw=true "MNIST Reconstruction")
 
