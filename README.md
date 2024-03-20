@@ -2,7 +2,7 @@
     
 
 
-### Content
+### Content 
 
 * **partition_mnist.py** - code for preparing MNIST dataset.
 * **partition_fmnist.py** - code for preparing MNIST dataset Fashion-MNIST.
