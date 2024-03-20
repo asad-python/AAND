@@ -28,3 +28,4 @@ def save_results(results, filename):
     f.close()
 
     print('Mean F1 at 50%%: %.3f' % mean_f1)
+    # print('Mean F1 at 10%%: %.3f' % mean_f1)
