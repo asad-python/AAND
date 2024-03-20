@@ -42,7 +42,7 @@ Train autoencoder with **train_AAE.py**, you need to call *train* function:
 ```
 data_list = [
     {
-        "inliner_classes": #######,
+        "inliner_classes": #######,  # Mention your classes here
         "ic": ########   # index
     }
     # You can add more configurations like this:
@@ -80,7 +80,7 @@ for folding_id in range(5):  # Loop from 0 to 4
      {"inliner_classes": [#######], "ic": #######}
 ]
 
-total_classes = ### 
+total_classes = 100 
 mul = 0.2
 folds = 5
 
