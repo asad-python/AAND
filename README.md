@@ -2,7 +2,11 @@
     
 
 
-### Content 
+### Content  
+
+### Code Files
+
+Following are the details of the main code files in the repository. You may find a few other files that are mostly for debugging and defaults.
 
 * **partition_mnist.py** - code for preparing MNIST dataset.
 * **partition_fmnist.py** - code for preparing MNIST dataset Fashion-MNIST.
@@ -15,11 +19,19 @@
 * **DATASET_folds_visualization.py** - Used to visualize the dataset folds and see the proper distribution of 
 
 
+### Folder Files
+
+Following are the details of the main folder files in the repository. You may find a few other files that are created during run time 
+
+* **configs** - Folder containing the important configurations for all the datasets in YAML format.
+* **utils** - It contains the utility files used in the code that are called in testing.
+
 ### Preparing Datasets
 
-The very first thing is to prepare datasets, this improved architecture can be tested on different datasets (Images and Videos). We have tested it on MNIST,Fashion-MNIST,Coil-100 and UCSD PED 2 video anomaly datsetes.
+The very first thing is to prepare datasets, this improved architecture can be tested on different datasets (Images and Videos). We have tested it on MNIST, Fashion-MNIST,Coil-100, and UCSD PED 2 video anomaly datasets.
+
 run **partition_DATASETNAME.py**, with the dataset name to prepare the data into folds. 
-For the Video dataset the preprocessing need to be done, the details are mentioned in the paper.
+For the Video dataset, the preprocessing needs to be done, the details are mentioned in the paper.
 
 ### Preparing Training
 
@@ -144,10 +156,5 @@ for folding_id in range(5):  # Loop from 0 to 4
 
 <br><br>
 
-![PDF](images/PDF.png?raw=true "PDF")
-
-*PDF of the latent space for MNIST. Size of the latent space - 32*
-
-<br><br>
 
 
