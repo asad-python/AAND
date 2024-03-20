@@ -122,7 +122,7 @@ for folding_id in range(5):  # Loop from 0 to 4
 
 <br><br>
 
-![Coil100 Reconstruction](images/Screenshot 2024-03-20 at 17.02.20.png?raw=true "MNIST Generation")
+![Coil100 Reconstruction](images/coil100.png?raw=true "MNIST Generation")
 
 *COIL100 Reconstruction. Reconstruction of the outliers from different categories.*
 
