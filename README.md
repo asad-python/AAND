@@ -1,10 +1,4 @@
-# Beyond the Known - Adversarial Autoencoders for Novelty Detection
-
-**Muhammad Asad,Ihsan Ullah and Michael Madden**
-
-Machine Learning Group, Department of Computer Science, University of Galway\
-    Ireland\
-    m.asad2@universityofgalway.ie
+# Leveraging Reconstruction Loss in Adversarial Autoencoders to Detect Novelty
     
 
 
