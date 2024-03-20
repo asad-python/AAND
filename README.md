@@ -158,8 +158,7 @@ for folding_id in range(5):  # Loop from 0 to 4
 
 ![PDF Generation](images/PDF.png?raw=true "PDF Generation")
 
-*he
-Probability Distribution Function (PDF) shows the distribution of the data. In
+*The Probability Distribution Function (PDF) shows the distribution of the data. In
 this visualization, inliers, which are seven categories of images and represent
 expected data points, form the core of the distribution. Alternatively, outliers
 significantly diverge from the standard range and are highlighted as separate,
